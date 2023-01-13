@@ -1,0 +1,16 @@
+cloudflare_api_token  = "supersecret"
+cloudflare_account_id = "myaccountid"
+domain_name           = "domain.tld"
+records = {
+  "service.domain.tld" = {
+    type    = "CNAME"
+    name    = "service"
+    content = "xxxxx.duckdns.org"
+  }
+}
+firewall_rules = {
+  block_china_and_russia = {
+    description = "Block China and Russia"
+    expression  = "(ip.geoip.country in {\"CN\" \"RU\"})"
+  }
+}
