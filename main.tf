@@ -35,24 +35,25 @@ resource "cloudflare_record" "default" {
   ttl     = lookup(each.value, "ttl", 1)
 }
 
-##################
-# Firewall Rules #
-##################
+####################
+# WAF Custom Rules #
+####################
 
-resource "cloudflare_filter" "default" {
-  for_each = var.firewall_rules
+resource "cloudflare_ruleset" "waf_custom_rules" {
+  zone_id = cloudflare_zone.default.id
+  name    = "default"
+  kind    = "zone"
+  phase   = "http_request_firewall_custom"
 
-  zone_id    = cloudflare_zone.default.id
-  expression = each.value.expression
-}
-
-resource "cloudflare_firewall_rule" "default" {
-  for_each = var.firewall_rules
-
-  zone_id     = cloudflare_zone.default.id
-  filter_id   = cloudflare_filter.default[each.key].id
-  description = lookup(each.value, "description", "")
-  action      = lookup(each.value, "action", "block")
+  dynamic "rules" {
+    for_each = var.firewall_rules
+    content {
+      action      = lookup(rules.value, "action", "block")
+      expression  = rules.value.expression
+      description = lookup(rules.value, "description", "")
+      enabled     = true
+    }
+  }
 }
 
 ###################
