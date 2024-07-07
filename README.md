@@ -4,4 +4,4 @@ The code to manage the [Cloudflare](https://www.cloudflare.com) zone (DNS record
 
 ## Requirements
 
-- [Terraform](https://docs.docker.com/get-docker/)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
