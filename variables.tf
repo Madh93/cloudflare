@@ -21,6 +21,6 @@ variable "records" {
 
 variable "firewall_rules" {
   description = "The list of firewall rules to apply"
-  type        = map(map(string))
-  default     = {}
+  type        = set(map(string))
+  default     = []
 }

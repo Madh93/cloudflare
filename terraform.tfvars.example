@@ -8,9 +8,9 @@ records = {
     content = "xxxxx.duckdns.org"
   }
 }
-firewall_rules = {
-  block_china_and_russia = {
+firewall_rules = [
+  {
     description = "Block China and Russia"
     expression  = "(ip.geoip.country in {\"CN\" \"RU\"})"
   }
-}
+]
